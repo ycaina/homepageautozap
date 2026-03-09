@@ -210,9 +210,9 @@ A landing page é totalmente responsiva:
 ## 📞 Suporte
 
 Para dúvidas ou sugestões:
-- GitHub Issues: [seu-repositorio/issues](https://github.com/seu-usuario/seu-repositorio/issues)
-- Email: seu-email@example.com
-- LinkedIn: [seu-perfil](https://linkedin.com/in/seu-perfil)
+- GitHub Issues: [https://github.com/ycaina/homepageautozap]
+- Email: yuri.moraes1989@gmail.com
+- LinkedIn: [https://www.linkedin.com/in/yuri-cain%C3%A3-60b5b27a/]
 
 ## 📄 Licença
 
