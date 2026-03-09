@@ -387,12 +387,23 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-[var(--az-border)] bg-[var(--az-bg)] py-9">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 text-xs text-[var(--az-text-muted)] sm:px-6">
-          <p className="font-semibold text-[var(--az-text)]">AutoZap IA</p>
-          <p>Aplicacao desktop para atendimento e vendas com IA no WhatsApp.</p>
+        <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 sm:grid-cols-2 sm:px-6">
+          <div className="flex flex-col gap-2 text-xs text-[var(--az-text-muted)]">
+            <p className="font-semibold text-[var(--az-text)]">AutoZap IA</p>
+            <p>Aplicacao desktop para atendimento e vendas com IA no WhatsApp.</p>
+          </div>
+
+          <div className="flex flex-col gap-2 text-xs text-[var(--az-text-muted)] sm:items-end">
+            <p className="font-semibold text-[var(--az-text)]">Meus contatos</p>
+            <a className="hover:text-[var(--az-text)]" href="tel:+5511960714822">Tel: (11) 96071-4822</a>
+            <a className="hover:text-[var(--az-text)]" href="mailto:yuri.moraes1989@gmail.com">Email: yuri.moraes1989@gmail.com</a>
+            <a className="hover:text-[var(--az-text)]" href="https://github.com/ycaina" target="_blank" rel="noreferrer">Git: github.com/ycaina</a>
+            <a className="hover:text-[var(--az-text)]" href="https://www.linkedin.com/in/yuri-cain%C3%A3-60b5b27a/" target="_blank" rel="noreferrer">LinkedIn: yuri-caina</a>
+          </div>
         </div>
       </footer>
     </div>
   );
 }
+
 
