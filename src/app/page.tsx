@@ -9,11 +9,12 @@ import {
   MessageSquare,
   Moon,
   Play,
+  QrCode,
   ScanSearch,
   Send,
   ShieldCheck,
+  Smartphone,
   Sun,
-  TriangleAlert,
   Video,
   Zap,
 } from 'lucide-react';
@@ -31,33 +32,39 @@ const THEME_KEY = 'autozap_theme';
 
 const SECONDARY_SCREENSHOTS: ScreenshotItem[] = [
   {
+    id: 'config-v2',
+    title: 'Configuracoes',
+    description: 'Controle da IA, modo hibrido e parametros de operacao.',
+    src: '/images/configuracoes-v2.jpg',
+  },
+  {
+    id: 'treinamento-v2',
+    title: 'Treinamento',
+    description: 'Fluxos e base de resposta para operacao por nicho.',
+    src: '/images/treinamento-v2.jpg',
+  },
+  {
+    id: 'diagnosticos-v2',
+    title: 'Diagnosticos',
+    description: 'Metricas de fila da LLM, fallback e roteamento de resposta.',
+    src: '/images/diagnosticos-v2.jpg',
+  },
+  {
     id: 'produtos',
-    title: 'Produtos',
-    description: 'Catalogo e estoque com foco em sugestao comercial durante o atendimento.',
+    title: 'Produtos + Estoque',
+    description: 'Cadastro comercial com pronta entrega para resposta automatica.',
     src: '/images/produtos.jpg',
   },
   {
-    id: 'diagnosticos',
-    title: 'Diagnosticos',
-    description: 'Visao operacional para monitorar saude do ambiente e comportamento da IA.',
-    src: '/images/diagnosticos.jpg',
-  },
-  {
     id: 'agendamento',
-    title: 'Agendamento',
-    description: 'Gestao de rotinas e programacoes para operacao continua e previsivel.',
+    title: 'Scheduler / Agendamento',
+    description: 'Rotinas, disparos e integracao com API de agendamentos.',
     src: '/images/agendamento.jpg',
-  },
-  {
-    id: 'treinamento',
-    title: 'Treinamento',
-    description: 'Base de conhecimento para ajustar respostas ao contexto real do negocio.',
-    src: '/images/treinamento.jpg',
   },
   {
     id: 'admin',
     title: 'Admin',
-    description: 'Controle de usuarios e configuracoes administrativas do sistema.',
+    description: 'Controle de usuarios e sessao.',
     src: '/images/admin.jpg',
   },
 ];
@@ -65,33 +72,43 @@ const SECONDARY_SCREENSHOTS: ScreenshotItem[] = [
 const FEATURES = [
   {
     icon: <Bot className="h-5 w-5" />,
-    title: 'Atendimento com IA aplicada',
-    description: 'Respostas contextualizadas com roteamento comercial e suporte a multiplos provedores.',
-  },
-  {
-    icon: <BarChart3 className="h-5 w-5" />,
-    title: 'Operacao orientada por dados',
-    description: 'Diagnosticos, status e historicos para acompanhar performance em tempo real.',
+    title: 'Atendimento com IA e modo hibrido',
+    description: 'Opera com Gemini, GPT, IA local ou combinacao com fluxo treinado.',
   },
   {
     icon: <ScanSearch className="h-5 w-5" />,
-    title: 'Treinamento e catalogo integrados',
-    description: 'Produtos, estoque e base de treinamento em um fluxo unico de atendimento.',
+    title: 'Catalogo com estoque real no chat',
+    description: 'Quando o cliente pede catalogo/pronta entrega, o retorno vem do estoque real.',
   },
   {
-    icon: <Send className="h-5 w-5" />,
-    title: 'Automacao de disparos',
-    description: 'Rotinas e campanhas para grupos, status e sequencias operacionais.',
-  },
-  {
-    icon: <Gauge className="h-5 w-5" />,
-    title: 'Fluxo humano + automatico',
-    description: 'Alternancia de operacao assistida sem perder controle do historico.',
+    icon: <Smartphone className="h-5 w-5" />,
+    title: 'Acesso mobile remoto',
+    description: 'Login no celular com QR Code e interface responsiva da mesma instancia.',
   },
   {
     icon: <ShieldCheck className="h-5 w-5" />,
-    title: 'Aplicacao desktop de uso real',
-    description: 'Interface de painel tecnico para rotina de atendimento e vendas.',
+    title: 'Seguranca de sessao mobile',
+    description: 'Token temporario, heartbeat, revogacao e encerramento quando desktop fecha.',
+  },
+  {
+    icon: <MessageSquare className="h-5 w-5" />,
+    title: 'Audio refinado',
+    description: 'Transcricao local melhorada e tratamento de texto para evitar caracteres quebrados.',
+  },
+  {
+    icon: <BarChart3 className="h-5 w-5" />,
+    title: 'Diagnostico operacional',
+    description: 'Monitora fila global da LLM, tempo de inferencia, fallback e cobertura sem LLM.',
+  },
+  {
+    icon: <Gauge className="h-5 w-5" />,
+    title: 'Teste e simulacao de atendimento',
+    description: 'Simulador de carga para validar lock por chat, debounce e comportamento em alta demanda.',
+  },
+  {
+    icon: <Send className="h-5 w-5" />,
+    title: 'Campanhas e automacao',
+    description: 'Disparo e scheduler com fluxo comercial integrado.',
   },
 ];
 
@@ -159,6 +176,7 @@ export default function Home() {
 
           <nav className="hidden items-center gap-7 text-sm text-[var(--az-text-muted)] md:flex">
             <a href="#features" className="transition hover:text-[var(--az-text)]">Funcionalidades</a>
+            <a href="#v2" className="transition hover:text-[var(--az-text)]">V2</a>
             <a href="#screenshots" className="transition hover:text-[var(--az-text)]">Interface</a>
             <a href="#video-demo" className="transition hover:text-[var(--az-text)]">Video</a>
           </nav>
@@ -173,16 +191,16 @@ export default function Home() {
             <div>
               <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--az-border)] bg-[var(--az-surface)] px-3 py-1 text-xs font-semibold text-[var(--az-text-muted)] shadow-[var(--az-shadow-soft)]">
                 <span className="h-2 w-2 rounded-full bg-[var(--az-accent-green)]" />
-                Plataforma de atendimento e vendas com IA
+                Versao atualizada com mobile remoto e observabilidade
               </p>
 
               <h1 className="text-4xl font-black leading-[1.04] tracking-[-0.03em] sm:text-6xl">
-                Venda mais no WhatsApp com
-                <span className="block text-[var(--az-accent-blue)]">IA, catalogo e automacao no mesmo painel</span>
+                AutoZap IA V2
+                <span className="block text-[var(--az-accent-blue)]">atendimento real, fluxo hibrido e operacao segura</span>
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-8 text-[var(--az-text-muted)]">
-                Centralize atendimento, recomendacao de produtos, diagnosticos e campanhas em uma operacao unica. Mais velocidade, mais consistencia e menos retrabalho manual.
+                Plataforma desktop para atendimento no WhatsApp com IA, estoque, automacao e agora com acesso mobile remoto via QR Code da mesma instancia.
               </p>
 
               <div className="mt-9 flex flex-wrap gap-3">
@@ -194,11 +212,11 @@ export default function Home() {
                   Ver interface real
                 </a>
                 <a
-                  href="#video-demo"
+                  href="#v2"
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--az-border)] bg-[var(--az-surface)] px-4 py-2.5 text-sm font-semibold text-[var(--az-text)] shadow-[var(--az-shadow-soft)] transition hover:bg-[var(--az-surface-2)]"
                 >
-                  <Video className="h-4 w-4" />
-                  Assistir demonstracao
+                  <QrCode className="h-4 w-4" />
+                  Novidades V2
                 </a>
               </div>
             </div>
@@ -212,34 +230,34 @@ export default function Home() {
                     <span className="h-2.5 w-2.5 rounded-full bg-[#4ade80]" />
                     <span className="h-2.5 w-2.5 rounded-full bg-[#60a5fa]" />
                   </div>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--az-text-muted)]">Preview real do dashboard</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--az-text-muted)]">Dashboard atualizado</span>
                 </div>
-                <img src="/images/dashboard.jpg" alt="Dashboard real do AutoZap IA" className="block h-auto w-full" />
+                <img src="/images/dashboard-novo.jpg" alt="Dashboard atualizado do AutoZap IA" className="block h-auto w-full" />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-4 pb-6 sm:px-6">
+        <section id="v2" className="mx-auto w-full max-w-6xl px-4 pb-6 sm:px-6">
           <div className="grid gap-4 rounded-2xl border border-[var(--az-border-strong)] bg-[var(--az-surface)] p-5 shadow-[var(--az-shadow-soft)] md:grid-cols-2 md:p-6">
             <article className="rounded-xl border border-[color-mix(in_oklab,var(--az-accent-blue),var(--az-border)_58%)] bg-[color-mix(in_oklab,var(--az-accent-blue),transparent_90%)] p-4">
               <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--az-accent-blue)]">
-                <TriangleAlert className="h-4 w-4" />
-                Problema
+                <Smartphone className="h-4 w-4" />
+                Mobile remoto
               </p>
-              <h3 className="mt-2 text-lg font-bold">Atendimento manual no WhatsApp nao escala</h3>
+              <h3 className="mt-2 text-lg font-bold">QR Code + sessao mobile segura na mesma instancia desktop</h3>
               <p className="mt-2 text-sm leading-6 text-[var(--az-text-muted)]">
-                Equipes perdem contexto, demoram para responder e deixam oportunidades de venda escapar no fluxo do dia.
+                Agora o usuario acessa pelo celular com token temporario, heartbeat e revogacao por sessao. Se o desktop fechar, as sessoes mobile sao encerradas.
               </p>
             </article>
             <article className="rounded-xl border border-[color-mix(in_oklab,var(--az-accent-green),var(--az-border)_58%)] bg-[color-mix(in_oklab,var(--az-accent-green),transparent_90%)] p-4">
               <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--az-accent-green)]">
                 <ArrowRight className="h-4 w-4" />
-                Solucao AutoZap
+                Operacao robusta
               </p>
-              <h3 className="mt-2 text-lg font-bold">IA + catalogo + automacao em operacao unica</h3>
+              <h3 className="mt-2 text-lg font-bold">Fila global de IA, lock por contato e simulacao de carga</h3>
               <p className="mt-2 text-sm leading-6 text-[var(--az-text-muted)]">
-                O AutoZap organiza atendimento, recomenda produtos com base no estoque e ativa campanhas com monitoramento centralizado.
+                O fluxo ganhou protecao contra concorrencia e testes com simulador interno para validar throughput, fallback e estabilidade antes de producao.
               </p>
             </article>
           </div>
@@ -250,7 +268,7 @@ export default function Home() {
             <div className="mb-12 max-w-2xl">
               <h2 className="text-3xl font-extrabold tracking-[-0.01em] sm:text-4xl">Funcionalidades principais</h2>
               <p className="mt-4 text-base text-[var(--az-text-muted)]">
-                Recursos essenciais do AutoZap em linguagem visual clara e profissional.
+                Recursos da versao atual com foco em operacao real no WhatsApp.
               </p>
             </div>
 
@@ -274,9 +292,9 @@ export default function Home() {
         <section id="video-demo" className="border-y border-[var(--az-border)] bg-[var(--az-bg-elevated)] py-20">
           <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
             <div className="mx-auto mb-8 max-w-4xl text-center">
-              <h2 className="text-3xl font-extrabold tracking-[-0.01em] sm:text-4xl">Veja o AutoZap IA em ação</h2>
+              <h2 className="text-3xl font-extrabold tracking-[-0.01em] sm:text-4xl">Demonstracao em video</h2>
               <p className="mt-4 text-base text-[var(--az-text-muted)]">
-                Assista a uma demonstracao rapida do AutoZap IA mostrando como o sistema conecta ao WhatsApp, analisa mensagens e automatiza o atendimento com inteligencia artificial.
+                Fluxo real: conexao WhatsApp, resposta com IA, catalogo com estoque e automacao.
               </p>
             </div>
 
@@ -295,11 +313,12 @@ export default function Home() {
             </div>
           </div>
         </section>
+
         <section id="screenshots" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
           <div className="mb-10">
-            <h2 className="text-3xl font-extrabold tracking-[-0.01em] sm:text-4xl">Screenshots reais do produto</h2>
+            <h2 className="text-3xl font-extrabold tracking-[-0.01em] sm:text-4xl">Screenshots da versao atual</h2>
             <p className="mt-4 max-w-3xl text-base text-[var(--az-text-muted)]">
-              Dashboard em destaque e navegacao limpa pelas demais telas operacionais.
+              Dashboard atualizado e visao das telas operacionais da V2.
             </p>
           </div>
 
@@ -308,9 +327,9 @@ export default function Home() {
               <article className="overflow-hidden rounded-2xl border border-[var(--az-border-strong)] bg-[var(--az-bg-elevated)] shadow-[var(--az-shadow-soft)]">
                 <div className="border-b border-[var(--az-border)] px-4 py-3">
                   <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--az-text-muted)]">Destaque principal</p>
-                  <h3 className="mt-1 text-lg font-bold">Dashboard operacional</h3>
+                  <h3 className="mt-1 text-lg font-bold">Dashboard (novo)</h3>
                 </div>
-                <img src="/images/dashboard.jpg" alt="Dashboard AutoZap IA" className="block h-auto w-full" />
+                <img src="/images/dashboard-novo.jpg" alt="Dashboard atualizado AutoZap IA" className="block h-auto w-full" />
               </article>
 
               <article className="rounded-2xl border border-[var(--az-border)] bg-[var(--az-surface-2)] p-4 shadow-[var(--az-shadow-soft)]">
@@ -343,9 +362,9 @@ export default function Home() {
 
           <div className="mt-10 rounded-2xl border border-[var(--az-border)] bg-[var(--az-surface)] p-4 shadow-[var(--az-shadow-soft)] sm:p-6">
             <div className="mb-5">
-              <h3 className="text-lg font-bold">Automacao de disparos</h3>
+              <h3 className="text-lg font-bold">Disparo e automacao</h3>
               <p className="mt-1 text-sm text-[var(--az-text-muted)]">
-                Bloco dedicado para campanhas e rotinas, separado da navegacao principal.
+                Campanhas e rotinas com controle operacional.
               </p>
             </div>
 
@@ -364,22 +383,22 @@ export default function Home() {
 
         <section id="flow" className="bg-[var(--az-bg-elevated)] py-20">
           <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-            <h2 className="text-3xl font-extrabold tracking-[-0.01em] sm:text-4xl">Como funciona na pratica</h2>
+            <h2 className="text-3xl font-extrabold tracking-[-0.01em] sm:text-4xl">Fluxo resumido da operacao</h2>
             <div className="mt-9 grid gap-5 md:grid-cols-3">
               <div className="rounded-2xl border border-[var(--az-border)] bg-[var(--az-surface)] p-5 shadow-[var(--az-shadow-soft)]">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--az-accent-blue)]">01</p>
-                <h3 className="mt-2 font-bold">Conecta e opera</h3>
-                <p className="mt-2 text-sm text-[var(--az-text-muted)]">Conexao com WhatsApp e inicio do painel em poucos passos.</p>
+                <h3 className="mt-2 font-bold">Conectar e configurar</h3>
+                <p className="mt-2 text-sm text-[var(--az-text-muted)]">Conexao WhatsApp, selecao do provedor de IA e ajuste de comportamento.</p>
               </div>
               <div className="rounded-2xl border border-[var(--az-border)] bg-[var(--az-surface)] p-5 shadow-[var(--az-shadow-soft)]">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--az-accent-blue)]">02</p>
-                <h3 className="mt-2 font-bold">Treina e configura</h3>
-                <p className="mt-2 text-sm text-[var(--az-text-muted)]">Prompt, treinamento e regras comerciais alinhadas ao negocio.</p>
+                <h3 className="mt-2 font-bold">Atender com contexto real</h3>
+                <p className="mt-2 text-sm text-[var(--az-text-muted)]">Catalogo, estoque e treinamento entram antes da LLM para resposta consistente.</p>
               </div>
               <div className="rounded-2xl border border-[var(--az-border)] bg-[var(--az-surface)] p-5 shadow-[var(--az-shadow-soft)]">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--az-accent-blue)]">03</p>
-                <h3 className="mt-2 font-bold">Atende e escala</h3>
-                <p className="mt-2 text-sm text-[var(--az-text-muted)]">Fluxo automatico com monitoramento e opcao de intervencao humana.</p>
+                <h3 className="mt-2 font-bold">Monitorar e escalar</h3>
+                <p className="mt-2 text-sm text-[var(--az-text-muted)]">Diagnostico, simulador de carga e sessao mobile segura para operacao continua.</p>
               </div>
             </div>
           </div>
@@ -405,5 +424,3 @@ export default function Home() {
     </div>
   );
 }
-
-
